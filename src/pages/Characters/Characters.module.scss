@@ -1,0 +1,55 @@
+.character__container {
+    display: grid;
+    grid-template-columns: 300px 300px 300px 300px;
+    gap: 20px;
+    justify-content: center;
+    padding-bottom: 50px;
+}
+
+.character__card__as__Link {
+    text-decoration: none;
+}
+
+.character__card {
+    box-shadow: 5px 5px 5px #565a5b;
+    border: 3px solid #2d3031;
+    background-color: #2d3031;
+    color: #FFFFFF;
+    border-radius: 7px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    gap: 7px;
+
+    padding-bottom: 15px;
+
+    &:hover {
+        transform: scale(1.05);
+    }
+}
+
+.character__image {
+    width: 300px;
+}
+
+.character__name {
+    text-decoration: underline;
+}
+
+.character__status {
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+    justify-content: center;
+    align-items: center;
+}
+
+.character__status__dot {
+    width: 7px;
+    height: 7px;
+    background-color: #545454;
+    border-radius: 50%;
+}
+

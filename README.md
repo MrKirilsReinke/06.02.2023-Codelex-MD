@@ -1,6 +1,10 @@
-﻿# 06.02.2023-Codelex-MD
-MD-15 React Router React Query
+# Quickstart
+Open your terminal and write:
+```
+npm i
+```
 
-1. npm i
-
-2. npm run dev
+When all packages have been installed run:
+```
+npm run dev
+```

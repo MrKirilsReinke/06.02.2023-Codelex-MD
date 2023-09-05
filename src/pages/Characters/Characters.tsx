@@ -1,84 +1,103 @@
-import React from 'react';
-import { useQuery } from '@tanstack/react-query';
-import { Link } from 'react-router-dom';
-import axios from 'axios';
-import style from './Characters.module.scss';
-import Character from '../Character/Character';
-
-const getAllCharacter = async () => {
-    const { data } = await axios.get('https://rickandmortyapi.com/api/character');
-
-    return data.results;
-};
+import React, { useEffect, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
+import { Link } from "react-router-dom";
+import axios from "axios";
+import style from "./Characters.module.scss";
+import Character from "../Character/Character";
 
 export interface Character {
-    created: string;
-    episode: string[];
-    gender: 'Male' | 'Female';
-    id: number;
-    image: string; 
-    location: Location;
-    name: string;
-    origin: Origin;
-    species: string;
-    status: 'Alive' | 'Dead' | 'unknown';
-    type: string;
-    url: string;
-  }
+  created: string;
+  episode: string[];
+  gender: "Male" | "Female";
+  id: number;
+  image: string;
+  location: Location;
+  name: string;
+  origin: Origin;
+  species: string;
+  status: "Alive" | "Dead" | "unknown";
+  type: string;
+  url: string;
+}
 
 export interface Origin {
-    name: string;
-    url: string;
-  }
+  name: string;
+  url: string;
+}
 
 export interface Location {
-    name: string;
-    dimension: string;
-    type: string;
-    url: string;
-  }
+  name: string;
+  dimension: string;
+  type: string;
+  url: string;
+}
 
 const Characters = () => {
-    const {data, isLoading} = useQuery<Character[]>({ queryKey: ['AllCharacters'], queryFn: getAllCharacter });
+  const [page, setPage] = useState(1);
+  const [characters, setCharacters] = useState<Character[]>([]);
 
-    console.log({data, isLoading});
+  const getAllCharacter = async (page: number) => {
+    const { data } = await axios.get(`https://rickandmortyapi.com/api/character/?page=${page}`);
 
+    return data;
+  };
 
-    if (isLoading) {
-        return <h1>Loading...</h1>;
+  const { data, isLoading } = useQuery<Character[]>({
+    queryKey: ["AllCharacters", page],
+    queryFn: () => getAllCharacter(page),
+  });
+
+  useEffect(() => {
+    if (data) {
+      // Append characters from the current page to the existing characters array
+      setCharacters(prevCharacters => [...prevCharacters, ...data.results]);
     }
+  }, [data]);
 
-    if (!data) {
-        throw Error('Something went wrong');
-    }
+  const handleNextPage = async () => {
+    const nextPage = page + 1;
+    setPage(nextPage);
+  };
 
-    console.log('data', data);
-    
-    
+  if (isLoading) {
+    return <h1>Loading...</h1>;
+  }
 
-    return (
-        <div className={style.character__container}>
-            {data.map(({id, image, name, species, gender, status, location}) => (
-                <Link to={`/character/${id}`} key={id} className={style.character__card__as__Link}>
-                    <div key={id} className={style.character__card}>
-                        <img src={image} alt={`${id} PIC`} className={style.character__image} />
-                        <h2>
-                            <span className={style.character__name}>
-                                {name}
-                            </span>
-                        </h2>
-                        <br />
-                        <h3>{gender}</h3>
-                        <h3 className={style.character__status}>
-                            <span className={style.character__status__dot}></span>
-                            {status} - {species}
-                        </h3>
-                        <h3>{location.name}</h3>
-                    </div>
-                </Link>
-            ))}
-        </div>
-    );
+  if (!data) {
+    throw Error("Something went wrong");
+  }
+
+  return (
+    <div className={style.container}>
+      <div className={style["card-container"]}>
+        {characters.map(({ id, image, name, species, gender, status, location }) => (
+          <Link to={`/character/${id}`} key={id} className={style["character-card"]}>
+            <img src={image} alt={`${id} PIC`} className={style["character-card__img"]} />
+            <h2 className={style["character-card__name"]}>{name}</h2>
+            <br />
+            <h3>{gender}</h3>
+            <h3 className={style["character-card__status"]}>
+              <span
+                className={`${style["character-card__status-dot"]} ${
+                  status !== "unknown"
+                    ? status === "Alive"
+                      ? style["character-card__status-dot--alive"]
+                      : style["character-card__status-dot--dead"]
+                    : style["character-card__status-dot--unknown"]
+                }`}></span>
+              {status} - {species}
+            </h3>
+            <h3>{location.name}</h3>
+          </Link>
+        ))}
+      </div>
+      {data.info.next !== null && (
+        <button className={style.button} onClick={handleNextPage}>
+          Show more
+        </button>
+      )}
+    </div>
+  );
 };
 
 export default Characters;

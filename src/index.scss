@@ -1,19 +1,28 @@
-@import url('https://fonts.googleapis.com/css2?family=Itim&family=Roboto:wght@400;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Itim&family=Roboto:wght@400;700&display=swap");
 
 * {
-    box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0;
+}
+
+p {
+  margin: 0;
 }
 
 body {
-    margin: 0 auto;
-    font-family: 'Itim', 'Roboto', sans-serif;
-    font-weight: normal;
-    font-size: 1rem;
-    line-height: 1.4;
-    background-color: #063d004b;
-    width: 100%;
-}
-
-h1, h2, h3, h4, h5, h6 {
-    margin: 0;
+  max-width: 100vw;
+  margin: 0 auto;
+  font-family: "Itim", "Roboto", sans-serif;
+  font-weight: normal;
+  font-size: 1rem;
+  line-height: 1.4;
+  background-color: #063d004b;
 }

@@ -99,10 +99,6 @@ Prop passing is not required for basic navigation between pages using Link compo
 * Axios: A versatile HTTP client for the browser and Node.js, used for API requests.
 * Rick and Morty API: An external API that provides character data for this project.
 
-## License
-
-This project is open-source and is available under the [MIT License](LICENSE). You are free to use, modify, and distribute this project for any purpose.
-
 ## How to Contribute
 
 Contributions to this project are welcome. To contribute, follow these steps:

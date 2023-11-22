@@ -10,7 +10,6 @@ This React application is a user-friendly portal designed to explore the fascina
 - [Installation](#installation)
 - [Usage](#usage)
 - [Credits](#credits)
-- [License](#license)
 - [Features](#features)
 - [How to Contribute](#how-to-contribute)
 
